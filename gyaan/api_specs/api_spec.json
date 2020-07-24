@@ -1,0 +1,438 @@
+{
+    "swagger": "2.0",
+    "host": "localhost:8000",
+    "basePath": "/api/gyaan/",
+    "info": {
+        "version": "1.0.0",
+        "title": "Gyann API",
+        "description": "Gyaan, knowledge platform api."
+    },
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "oauth": {
+            "tokenUrl": "http://auth.ibtspl.com/oauth2/",
+            "flow": "password",
+            "scopes": {
+                "read": "read users",
+                "write": "create users",
+                "update": "update users",
+                "delete": "delete users",
+                "superuser": "super user permission"
+            },
+            "type": "oauth2"
+        }
+    },
+    "definitions": {
+        "UserDetails": {
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "profile_pic": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string",
+                    "enum": [
+                        "USER",
+                        "ADMIN",
+                        "DOMAIN_EXPERT"
+                    ]
+                }
+            },
+            "required": [
+                "user_id",
+                "name",
+                "profile_pic"
+            ]
+        },
+        "Domain": {
+            "type": "object",
+            "properties": {
+                "domain_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "domain_name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "domain_id",
+                "domain_name"
+            ]
+        },
+        "Domains": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Domain"
+            }
+        },
+        "DomainWithPostsCount": {
+            "type": "object",
+            "properties": {
+                "domain_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "domain_name": {
+                    "type": "string"
+                },
+                "posts_count": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "DomainWithPendingPostsCount": {
+            "type": "object",
+            "properties": {
+                "domain_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "domain_name": {
+                    "type": "string"
+                },
+                "posts_count": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "ListOfDomainsWithPostsCount": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/DomainWithPostsCount"
+            }
+        },
+        "ListOfDomainsWithpPendingPostsCount": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/DomainWithPendingPostsCount"
+            }
+        },
+        "GetUserDomainsPosts": {
+            "type": "object",
+            "properties": {
+                "total_posts": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "domains": {
+                    "$ref": "#/definitions/ListOfDomainsWithPostsCount"
+                }
+            },
+            "required": [
+                "total_posts",
+                "domains"
+            ]
+        },
+        "GetUserDomainsWithPendingPosts": {
+            "type": "object",
+            "properties": {
+                "total_pending_posts": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "pending_domains": {
+                    "$ref": "#/definitions/ListOfDomainsWithpPendingPostsCount"
+                }
+            },
+            "required": [
+                "total_pending_posts",
+                "pending_domains"
+            ]
+        },
+        "Tag": {
+            "type": "object",
+            "properties": {
+                "tag_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "tag_name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "tag_id",
+                "tag_name"
+            ]
+        },
+        "ListOfTags": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Tag"
+            }
+        },
+        "CommentReply": {
+            "type": "object",
+            "properties": {
+                "reply_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "reply_content": {
+                    "type": "string"
+                },
+                "replied_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "replied_by": {
+                    "$ref": "#/definitions/UserDetails"
+                }
+            }
+        },
+        "ListOfCommentReplies": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/CommentReply"
+            }
+        },
+        "Comment": {
+            "type": "object",
+            "properties": {
+                "comment_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "comment_content": {
+                    "type": "string"
+                },
+                "commented_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "commented_by": {
+                    "$ref": "#/definitions/UserDetails"
+                },
+                "replies": {
+                    "$ref": "#/definitions/ListOfCommentReplies"
+                }
+            }
+        },
+        "ListOfComments": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Comment"
+            }
+        }
+    },
+    "parameters": {
+    },
+    "responses": {
+        "GetUserDomainsResponse": {
+            "description": "get user domains response",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "user_details": {
+                        "$ref": "#/definitions/UserDetails"
+                    },
+                    "user_following_domains": {
+                        "$ref": "#/definitions/Domains"
+                    },
+                    "suggested_domains": {
+                        "$ref": "#/definitions/Domains"
+                    },
+                    "user_domains_posts": {
+                        "$ref": "#/definitions/GetUserDomainsPosts"
+                    },
+                    "user_pending_domain_posts": {
+                        "$ref": "#/definitions/GetUserDomainsWithPendingPosts"
+                    },
+                    "domain_requests": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/UserDetails"
+                        }
+                    },
+                    "domain_expert_pendings": {
+                        "$ref": "#/definitions/ListOfDomainsWithPostsCount"
+                    }
+                },
+                "required": [
+                    "user_details",
+                    "user_following_domains",
+                    "suggested_domains",
+                    "user_domains_posts",
+                    "user_pending_domain_posts",
+                    "domain_requests",
+                    "domain_expert_pendings"
+                ]
+            }
+        }
+    },
+    "paths": {
+        "/get/user/domains/": {
+            "get": {
+                "operationId": "get_user_domains",
+                "summary": "get user domains",
+                "description": "get user domains and posts summary",
+                "security": [
+                    {
+                        "oauth": [
+                            "read"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "$ref": "#/responses/GetUserDomainsResponse"
+                    }
+                }
+            }
+        },
+        "/get/list/of/posts": {
+            "get": {
+                "operationId": "get_list_of_posts",
+                "summary": "get all domains posts",
+                "description": "get all domains posts",
+                "security": [
+                    {
+                        "oauth": [
+                            "read"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": true,
+                        "description": "offset for posts",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "description": "limit for posts",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "success response for list of posts",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "total_posts_count": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "result": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "post_id": {
+                                                "type": "integer",
+                                                "format": "int64"
+                                            },
+                                            "post_content": {
+                                                "type": "string"
+                                            },
+                                            "posted_by": {
+                                                "$ref": "#/definitions/UserDetails"
+                                            },
+                                            "post_tags": {
+                                                "$ref": "#/definitions/ListOfTags"
+                                            },
+                                            "post_reactions": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "reactions_count": {
+                                                        "type": "integer",
+                                                        "format": "int64"
+                                                    },
+                                                    "reacted_by": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "$ref": "#/definitions/UserDetails"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "post_comments": {
+                                                "$ref": "#/definitions/ListOfComments"
+                                            },
+                                            "post_answer": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "answer_id": {
+                                                        "type": "integer",
+                                                        "format": "int64"
+                                                    },
+                                                    "answer_content": {
+                                                        "type": "string"
+                                                    },
+                                                    "answered_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
+                                                    "answered_by": {
+                                                        "$ref": "#/definitions/UserDetails"
+                                                    },
+                                                    "approved_by": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "user_id": {
+                                                                "type": "integer",
+                                                                "format": "int64"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "domain_name": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "required": [
+                                                    "answer_id",
+                                                    "answer_content",
+                                                    "answered_at",
+                                                    "answered_by",
+                                                    "approved_by"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "post_id",
+                                            "post_content",
+                                            "posted_by",
+                                            "post_tags",
+                                            "post_reactions",
+                                            "post_comments",
+                                            "post_answer"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

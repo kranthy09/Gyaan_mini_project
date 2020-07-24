@@ -1,0 +1,138 @@
+{
+    "swagger": "2.0",
+    "host": "localhost:8000",
+    "basePath": "/api/gyaan/",
+    "info": {
+        "version": "1.0.0",
+        "title": "Gyann User Login API",
+        "description": "An API to Login"
+    },
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "oauth": {
+            "tokenUrl": "http://auth.ibtspl.com/oauth2/",
+            "flow": "password",
+            "scopes": {
+                "read": "read users",
+                "write": "create users",
+                "update": "update users",
+                "delete": "delete users",
+                "superuser": "super user permission"
+            },
+            "type": "oauth2"
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+            },
+            "required": [
+                "username",
+                "password"
+            ]
+        }
+    },
+    "parameters": {
+        "LoginUserParameter": {
+            "name": "login_user_parameter",
+            "in": "body",
+            "description": "the User to Login",
+            "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+    },
+    "responses": {
+        "LoginUserResponse": {
+            "description": "Success Response",
+            "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "integer",
+                    "format":"int64"
+                  },
+                  "access_token": {
+                    "type": "string"
+                  },
+                  "user_role": {
+                    "type": "string",
+                    "enum": [
+                        "USER",
+                        "ADMIN",
+                        "DOMAIN-EXPERT"
+                      ]
+                  }
+                }
+            }
+        },
+        "LoginUserFailureResponse": {
+          "description": "Failure Response",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "response": {
+                "type": "string"
+              },
+              "http_response_code": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "res_status": {
+                "type": "string",
+                "enum": [
+                    "INVALID_USERNAME",
+                    "USERNAME_AND_PASSWORD_DOESNOT_MATCH"
+                  ]
+              }
+            },
+            "required": [
+                "response",
+                "http_response_code",
+                "res_status"
+              ]
+          }
+        }
+    },
+    "paths": {
+        "/login/": {
+          "post": {
+            "operationId": "login_user",
+            "summary": "Login User with Username and password",
+            "description": "Login user with Username and password",
+            "security": [
+
+                ],
+            "parameters": [
+                {
+                  "$ref": "#/parameters/LoginUserParameter"
+                }
+              ],
+            "responses": {
+              "201": {
+                "$ref": "#/responses/LoginUserResponse"
+              },
+              "404": {
+                "$ref": "#/responses/LoginUserFailureResponse"
+              }
+            }
+          }
+        }
+    }
+}

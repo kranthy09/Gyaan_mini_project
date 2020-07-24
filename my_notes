@@ -1,0 +1,211 @@
+Feed:
+	Activity one line Description
+	difference between solution and comment
+Review Page:
+	What is Review Request...
+	comment and reply relation between author and domain expert
+	what is only visible to author and admin, is it in home page or in review page?
+
+Domain Page:
+	what we have to show in :
+		Your Pendings
+		Pending For review
+		Requests
+
+Home Page: 
+	On click on userpic how user details are shown.
+	what happens when we click all domains.
+
+how the admin and user will be differentiatied.
+password is non sharable how can it easily send throught request body, is there a way to send password in a protected way.
+
+for each post, how many number of solutions?
+
+is there any action need to be done when logout button is clicked
+
+
+pip install --upgrade django==2.2.1
+
+
+----------------------------------------------------------------------------------------
+
+
+
+user_details: {
+	user_id: int,
+	user_name: str,
+	name: str,
+	profile_pic: str,
+	role: str
+}
+user_domains: [
+	{
+	  domain_id: int,
+	  domain_name: str,
+	}
+]
+suggested_domains: [
+	{
+	  domain_id: int,
+	  domain_name: str
+	}
+]
+user_domains_posts:[
+	domains:{
+		domain_id: int,
+		domain_name: int
+		count: int
+	},
+	total_posts: int
+]
+
+user_pending_domain_posts: [
+	domains:{
+		domain_id: int,
+		domain_name: int
+		count: int
+	},
+	total_pending_posts_posts: int
+]
+
+
+"parameters":[
+                    {
+                        "name":"offset",
+                        "in":"query",
+                        "required":true,
+                        "description":"offset for posts",
+                        "type":"integer"
+                    },
+                    {
+                        "name":"limit",
+                        "in":"query",
+                        "required":true,
+                        "description":"limit for posts",
+                        "type":"integer"
+                    }
+                ],
+                
+                
+list_of_all_posts: [
+	{
+		post_id: int,
+		post_content: str,
+		posted_by: {
+			#user_details#
+		},
+		posted_at: date-time,
+		post_tags:[
+			tag_id: int,
+			tag_name: str
+		],
+		post_reactions: {
+			reactions_count: int,
+			reacted_by: [
+				{
+					"user_details"
+				}
+			]
+		},
+		post_comments : {
+			comments: [{
+				comment_id: int,
+				comment_content: str,
+				commented_by: {
+					#user_details#
+				},
+				commented_at: date-time,
+				replies: []
+			}],
+			comments_count: int
+		},
+		post_answer: {
+			answer_id: int,
+			answer_content: string,
+			answered_by: {
+				#user_details#
+			},
+			answered_at: date-time,
+			approved_by: {
+				user_id: int,
+				name: str,
+				domain_name: str
+			}
+		}
+	}
+]
+
+
+
+
+# Home Page
+
+/get/user/domains/:
+
+request body: user_id
+
+validations:
+	validate user_id
+	no request body to do furthur validations
+
+TODO: Getting user details
+TODO: Getting all doamins with user following and unfollowing
+TODO: Getting user domains approved posts and pending posts
+TODO: Getting Domain requests for domain expert and admin
+
+
+1) getting user details
+
+	get user details dto from user_app using services
+
+		:write user details interactor in user app fetching details required
+
+		:create a service to call that interface for user details
+
+2) Getting all doamins with user following and unfollowing
+
+
+
+
+
+On Progress:
+
+
+Done:
+
+	:with writing get_user_details_dto_interactor
+	:create a interface in user_app to enable the communication
+		-- not writing factories after defining models
+		? what is class meta:..
+		when writing factories, for datetime field we user LazyFunction
+			with datetime.now to fill the datetime field
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+no clean_architecture
+no database_submissions
