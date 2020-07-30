@@ -37,8 +37,8 @@ class DomainStorageImplementation(DomainStorageInterface):
     def get_user_posts_with_domain(self, user_id: int) \
             -> DomainMetrics:
         domains = DomainPost.objects.filter(is_approved=True, user_id=user_id) \
-                    .values('domain_id', 'domain__domain_name') \
-                    .annotate(count=Count('post_id'))
+            .values('domain_id', 'domain__domain_name') \
+            .annotate(count=Count('post_id'))
         user_posts_with_domain_dtos = self._convert_to_domain_metrics_dto(domains)
         return user_posts_with_domain_dtos
 
@@ -46,9 +46,9 @@ class DomainStorageImplementation(DomainStorageInterface):
             -> DomainMetrics:
 
         domains = list(DomainPost.objects.filter(is_approved=False, user_id=user_id) \
-            .values('domain_id', 'domain__domain_name') \
-            .annotate(count=Count('post_id')))
-        user_posts_with_pending_domain_dtos = self._convert_to_domain_metrics_dto(domains)
+                       .values('domain_id', 'domain__domain_name') \
+                       .annotate(count=Count('post_id')))
+        user_posts_with_pending_domain_dtos = self._convert_to_domain_metrics_dto(domains=domains)
         return user_posts_with_pending_domain_dtos
 
     def is_user_domain_expert(self, user_id: int) -> bool:
@@ -59,15 +59,27 @@ class DomainStorageImplementation(DomainStorageInterface):
 
     def get_domain_expert_domain_ids(self, domain_expert_id: int) \
             -> List[int]:
-        pass
+        domain_ids = DomainExperts.objects \
+            .filter(domain_expert_id=domain_expert_id) \
+            .values_list('domain_id', flat=True)
+        return domain_ids
 
     def get_domain_requests_ids(self, domain_ids: List[int]) \
             -> List[int]:
-        pass
+        domain_requests_ids = DomainRequests.objects \
+            .filter(domain_id__in=domain_ids, is_approved=False) \
+            .values_list('domain_request_ids', flat=True)
+        return domain_requests_ids
 
     def get_domain_expert_approval_posts(self, domain_expert_id: int) \
             -> List[DomainDto]:
-        pass
+        domain_ids = self \
+            .get_domain_expert_domain_ids(domain_expert_id=domain_expert_id)
+        domains = list(DomainPost.objects.filter(is_approved=False, domain_id__in=domain_ids) \
+                       .values('domain_id', 'domain__domain_name') \
+                       .annotate(count=Count('post_id')))
+        domain_expert_approval_posts = self._convert_to_domain_metrics_dto(domains=domains)
+        return domain_expert_approval_posts.domains
 
     @staticmethod
     def _convert_to_domain_metrics_dto(domains: List[Dict[int, str, int]]) \
