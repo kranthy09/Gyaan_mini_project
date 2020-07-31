@@ -2,7 +2,8 @@ from abc import ABC, abstractmethod
 from typing import List
 from gyaan.interactors.storages.dtos \
     import (DomainDto,
-            DomainMetrics)
+            DomainMetrics,
+            DomainWithPostsCount)
 
 
 class DomainStorageInterface(ABC):
@@ -42,5 +43,5 @@ class DomainStorageInterface(ABC):
 
     @abstractmethod
     def get_domain_expert_approval_posts(self, domain_expert_id: int) \
-        -> List[DomainDto]:
+        -> List[DomainWithPostsCount]:
         pass

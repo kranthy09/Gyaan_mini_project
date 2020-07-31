@@ -56,7 +56,7 @@ class TestGetUserDomainsInteractor:
         user_posts_with_domain = [
             DomainMetrics(
                 total_posts=3,
-                domain=user_domains_with_posts_count
+                domains=user_domains_with_posts_count
             )
         ]
         user_domains_with_pending_posts_count = [
@@ -69,7 +69,7 @@ class TestGetUserDomainsInteractor:
         user_pending_posts_with_domain = [
             DomainMetrics(
                 total_posts=1,
-                domain=user_domains_with_pending_posts_count
+                domains=user_domains_with_pending_posts_count
             )
         ]
 
@@ -153,7 +153,7 @@ class TestGetUserDomainsInteractor:
         user_posts_with_domain = [
             DomainMetrics(
                 total_posts=3,
-                domain=user_domains_with_posts_count
+                domains=user_domains_with_posts_count
             )
         ]
         user_domains_with_pending_posts_count = [
@@ -166,7 +166,7 @@ class TestGetUserDomainsInteractor:
         user_pending_posts_with_domain = [
             DomainMetrics(
                 total_posts=1,
-                domain=user_domains_with_pending_posts_count
+                domains=user_domains_with_pending_posts_count
             )
         ]
         expert_domain_ids = [1, 2]
@@ -203,7 +203,6 @@ class TestGetUserDomainsInteractor:
             .return_value = domain_request_ids
         domain_storage.get_domain_expert_approval_posts \
             .return_value = expert_approval_posts_dtos
-
 
         # Act
         interactor.get_user_domains_wrapper(

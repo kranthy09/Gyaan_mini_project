@@ -25,7 +25,7 @@ class UserDomainsDetails:
     user_details: UserDetailsDto
     user_following_domains: List[DomainDto]
     suggested_domains: List[DomainDto]
-    user_domains_posts: List[DomainMetrics]
-    user_pending_domain_posts: List[DomainMetrics]
+    user_domains_posts: DomainMetrics
+    user_pending_domain_posts: DomainMetrics
     domain_requests: List[UserDetailsDto]
     domain_expert_pendings: List[DomainDto]

@@ -1,7 +1,6 @@
 import factory, factory.fuzzy
 import datetime
 from .models import User
-from user_app.constants.enums import UserRoles
 
 
 class UserFactory(factory.django.DjangoModelFactory):

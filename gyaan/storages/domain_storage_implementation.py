@@ -54,7 +54,7 @@ class DomainStorageImplementation(DomainStorageInterface):
     def is_user_domain_expert(self, user_id: int) -> bool:
 
         is_domain_expert = \
-            DomainExperts.objects.filter(user_id=user_id).exists()
+            DomainExperts.objects.filter(domain_expert_id=user_id).exists()
         return is_domain_expert
 
     def get_domain_expert_domain_ids(self, domain_expert_id: int) \
@@ -72,7 +72,7 @@ class DomainStorageImplementation(DomainStorageInterface):
         return domain_requests_ids
 
     def get_domain_expert_approval_posts(self, domain_expert_id: int) \
-            -> List[DomainDto]:
+            -> List[DomainWithPostsCount]:
         domain_ids = self \
             .get_domain_expert_domain_ids(domain_expert_id=domain_expert_id)
         domains = list(DomainPost.objects.filter(is_approved=False, domain_id__in=domain_ids) \

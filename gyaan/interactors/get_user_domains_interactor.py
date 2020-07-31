@@ -21,6 +21,7 @@ class GetUserDomainsInteractor:
         user_domains_details_dto = self.get_user_domains(user_id=user_id)
 
         response = domain_presenter.get_response_for_user_domains(user_domains_details_dto=user_domains_details_dto)
+        return response
 
     def get_user_domains(self, user_id: int):
 
@@ -66,11 +67,10 @@ class GetUserDomainsInteractor:
             )
         return user_domains_details_dto
 
-    def _get_user_following_and_suggested_domains(
-            self,
-            domain_ids: List[int],
-            domain_dtos: List[DomainDto]
-    ) -> Tuple[List[DomainDto], List[DomainDto]]:
+    @staticmethod
+    def _get_user_following_and_suggested_domains(domain_ids: List[int],
+                                                  domain_dtos: List[DomainDto]
+                                                  ) -> Tuple[List[DomainDto], List[DomainDto]]:
 
         user_following_domains_dtos = []
         user_suggested_domains_dtos = []

@@ -4,7 +4,7 @@ from .domain import (Domain,
                      DomainRequests,
                      DomainPost,
                      DomainTag)
-from user_app.models.models import User
+from user_app.models.factory import UserFactory
 
 
 class DomainFactory(factory.django.DjangoModelFactory):
@@ -22,7 +22,7 @@ class DomainExpertsFactory(factory.django.DjangoModelFactory):
         model = DomainExperts
 
     domain = factory.Iterator(Domain.objects.all())
-    domain_expert_id = factory.Iterator(user.id for user in User.objects.all())
+    domain_expert_id = factory.Iterator([1,2,3])
 
 
 class DomainRequestsFactory(factory.django.DjangoModelFactory):
@@ -31,7 +31,7 @@ class DomainRequestsFactory(factory.django.DjangoModelFactory):
         model = DomainRequests
 
     domain = factory.Iterator(Domain.objects.all())
-    requested_by = factory.Iterator(user.id for user in User.objects.all())
+    requested_by = factory.Iterator([4, 5, 6, 7, 8, 9])
     is_approved = factory.fuzzy.FuzzyChoice([True, False])
 
 
@@ -40,7 +40,7 @@ class DomainPostFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = DomainPost
 
-    user_id = factory.Iterator(user.id for user in User.objects.all())
+    user_id = factory.Iterator([4, 5, 6, 7, 8, 9])
     post_id = factory.fuzzy.FuzzyInteger(1,10)
     domain = factory.Iterator(Domain.objects.all())
     is_approved = factory.fuzzy.FuzzyChoice([True, False])
