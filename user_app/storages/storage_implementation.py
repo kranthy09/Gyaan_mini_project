@@ -22,10 +22,11 @@ class StorageImplementation(StorageInterface):
 
     def validate_password(self, username: str, password: str):
 
-        is_password_does_not_match = \
-                not User.objects.filter(username=username,
-                                        password=password)
-        if is_password_does_not_match:
+        user = User.objects.get(username=username)
+
+        is_not_valid_password = not user.check_password(raw_password=password)
+
+        if is_not_valid_password:
             raise InvalidPassword
         return True
 

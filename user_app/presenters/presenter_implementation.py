@@ -7,13 +7,12 @@ from user_app.constants.custom_messages \
             invalid_password)
 from user_app.interactors.storages.dtos \
     import TokenDto
-from typing import Dict
 
 
 class PresenterImplementation(PresenterInterface):
 
     def raise_exception_for_invalid_username(self) \
-            -> Dict[str, str]:
+            -> HttpResponse:
         response_msg = invalid_username[1]
         status_code = 404
         res_status = invalid_username[0]
@@ -30,7 +29,7 @@ class PresenterImplementation(PresenterInterface):
         return response_data
 
     def raise_exception_for_invalid_password(self) \
-            -> Dict[str, str]:
+            -> HttpResponse:
         response_msg = invalid_password[1]
         status_code = 404
         res_status = invalid_password[0]
@@ -47,7 +46,7 @@ class PresenterImplementation(PresenterInterface):
         return response_data
 
     def get_response_for_login(self, token_dto: TokenDto) \
-            ->Dict[str, str]:
+            -> HttpResponse:
 
         data = json.dumps(
             {

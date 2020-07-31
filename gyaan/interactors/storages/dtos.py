@@ -9,16 +9,19 @@ class DomainDto:
     domain_id: int
     domain_name: str
 
+
 @dataclass
 class DomainWithPostsCount:
     domain_id: int
     domain_name: str
     posts_count: int
 
+
 @dataclass
 class DomainMetrics:
     domains: List[DomainWithPostsCount]
     total_posts: int
+
 
 @dataclass
 class UserDomainsDetails:

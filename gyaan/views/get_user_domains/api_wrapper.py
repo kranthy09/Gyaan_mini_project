@@ -12,8 +12,7 @@ from gyaan.interactors.get_user_domains_interactor \
 @validate_decorator(validator_class=ValidatorClass)
 def api_wrapper(*args, **kwargs):
 
-    request_data = kwargs['request_data']
-    user_id = request_data['user_dto'].user_id
+    user_id = kwargs['user_dto'].user_id
 
     domain_storage = DomainStorageImplementation()
     domain_presenter = JsonPresenter()

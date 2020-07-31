@@ -1,8 +1,8 @@
 import requests
 import json
 
-url = " http://127.0.0.1:8000/api/user_app/login/"
-data = {"username":"kranthi", "password":"kranthi"}
+url = "  https://9ca80e301882.ngrok.io/api/user_app/login/"
+data = {"username":"kranthi", "password":"g"}
 
 headers = {"Content-Type": "application/json"}
 

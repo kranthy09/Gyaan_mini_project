@@ -29,11 +29,12 @@ class TestCase01GetUserDomainsAPITestCase(TestUtils):
         DomainTagFactory.reset_sequence()
         UserFactory.reset_sequence()
 
+        user = UserFactory(username="kranthi", user_role="USER", profile_pic="profile.com")
         DomainFactory.create_batch(size=10)
         DomainExpertsFactory(domain_expert_id=1)
-        DomainRequestsFactory(requested_by=4, is_approved=False)
-        DomainRequestsFactory(requested_by=4, is_approved=True)
-        DomainPostFactory(user_id=4)
+        DomainRequestsFactory(requested_by=user.id, is_approved=False)
+        DomainRequestsFactory(requested_by=user.id, is_approved=True)
+        DomainPostFactory(user_id=user.id)
         DomainTagFactory()
 
     @pytest.mark.django_db
@@ -47,10 +48,3 @@ class TestCase01GetUserDomainsAPITestCase(TestUtils):
                                       query_params=query_params,
                                       headers=headers,
                                       snapshot=snapshot)
-        import json
-        data = json.loads(response.content)
-        mock_response = {}
-        print(("\n"*10))
-        print(data)
-        print(("\n" * 10))
-        assert response == mock_response

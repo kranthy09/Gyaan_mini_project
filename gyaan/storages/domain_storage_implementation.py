@@ -20,7 +20,7 @@ class DomainStorageImplementation(DomainStorageInterface):
             DomainRequests.objects.filter(
                 requested_by=user_id,
                 is_approved=True).values_list('id', flat=True)
-        return user_following_domain_ids
+        return list(user_following_domain_ids)
 
     def get_all_domains_dtos(self) -> List[DomainDto]:
         domains = Domain.objects.all()
@@ -68,7 +68,7 @@ class DomainStorageImplementation(DomainStorageInterface):
             -> List[int]:
         domain_requests_ids = DomainRequests.objects \
             .filter(domain_id__in=domain_ids, is_approved=False) \
-            .values_list('domain_request_ids', flat=True)
+            .values_list('requested_by', flat=True)
         return domain_requests_ids
 
     def get_domain_expert_approval_posts(self, domain_expert_id: int) \
@@ -82,7 +82,7 @@ class DomainStorageImplementation(DomainStorageInterface):
         return domain_expert_approval_posts.domains
 
     @staticmethod
-    def _convert_to_domain_metrics_dto(domains: List[Dict[int, str, int]]) \
+    def _convert_to_domain_metrics_dto(domains) \
             -> DomainMetrics:
 
         user_posts_with_domain_dtos = []
@@ -91,7 +91,7 @@ class DomainStorageImplementation(DomainStorageInterface):
             user_posts_with_domain_dtos.append(
                 DomainWithPostsCount(
                     domain_id=domain['domain_id'],
-                    domain_name=domain['domain_name'],
+                    domain_name=domain['domain__domain_name'],
                     posts_count=domain['count']
                 )
             )
