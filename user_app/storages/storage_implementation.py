@@ -3,8 +3,7 @@ from user_app.exceptions.exceptions \
                 InvalidPassword)
 from user_app.interactors.storages.dtos \
         import (UserRoleDto,
-                UserDetailsDto,
-                UserDetailsDtoList)
+                UserDetailsDto)
 from user_app.interactors.storages.storage_interface \
         import StorageInterface
 from user_app.models.models import User
@@ -40,7 +39,7 @@ class StorageImplementation(StorageInterface):
             user_role=user.user_role
         )
 
-    def get_user_details(self, user_ids: List[int]) -> List[UserDetailsDtoList]:
+    def get_user_details(self, user_ids: List[int]) -> List[UserDetailsDto]:
 
         users = User.objects.filter(id__in=user_ids)
         user_details_dto_list = []

@@ -7,7 +7,9 @@ RESPONSE_201_JSON = """
     "result": [
         {
             "post_id": 1,
+            "post_title": "string",
             "post_content": "string",
+            "post_comments_count": 1,
             "posted_by": {
                 "user_id": "string",
                 "name": "string",

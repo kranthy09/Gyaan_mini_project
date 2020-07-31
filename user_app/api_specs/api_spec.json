@@ -98,7 +98,7 @@
                 "type": "string",
                 "enum": [
                     "INVALID_USERNAME",
-                    "USERNAME_AND_PASSWORD_DOESNOT_MATCH"
+                    "INVALID_PASSWORD"
                   ]
               }
             },

@@ -1,11 +1,11 @@
 import requests
 import json
 
-url = "  https://9ca80e301882.ngrok.io/api/user_app/login/"
-data = {"username":"kranthi", "password":"g"}
+url = "http://127.0.0.1:8000/api/gyaan/get/user/domains/"
+data = {"username":"kranthi", "password":"kranthi"}
 
-headers = {"Content-Type": "application/json"}
+headers = {"Content-Type": "application/json", "Authorization": "Bearer token"}
 
-req = requests.post(url, json=data, headers=headers)
+req = requests.get(url, headers=headers)
 
 print(req.content)
