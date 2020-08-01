@@ -17,10 +17,10 @@ class DomainStorageImplementation(DomainStorageInterface):
     def get_user_following_domain_ids(self, user_id: int) \
             -> List[int]:
         user_following_domain_ids = \
-            DomainRequests.objects.filter(
+            list(DomainRequests.objects.filter(
                 requested_by=user_id,
-                is_approved=True).values_list('id', flat=True)
-        return list(user_following_domain_ids)
+                is_approved=True).values_list('domain_id', flat=True))
+        return user_following_domain_ids
 
     def get_all_domains_dtos(self) -> List[DomainDto]:
         domains = Domain.objects.all()

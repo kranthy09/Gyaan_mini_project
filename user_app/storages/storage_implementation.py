@@ -14,16 +14,16 @@ class StorageImplementation(StorageInterface):
 
     def validate_username(self, username: str):
 
-        is_username_does_not_exists = not User.objects.filter(username=username)
-        if is_username_does_not_exists:
+        user_obj = User.objects.get(username=username)
+        if not user_obj:
             raise InvalidUsername
         return True
 
     def validate_password(self, username: str, password: str):
 
-        user = User.objects.get(username=username)
+        user_obj = User.objects.get(username=username)
 
-        is_not_valid_password = not user.check_password(raw_password=password)
+        is_not_valid_password = not user_obj.check_password(password)
 
         if is_not_valid_password:
             raise InvalidPassword
@@ -32,7 +32,7 @@ class StorageImplementation(StorageInterface):
     def get_user_role_dto(self, username: str, password: str) \
             -> UserRoleDto:
 
-        user = User.objects.get(username=username, password=password)
+        user = User.objects.get(username=username)
 
         return UserRoleDto(
             user_id=user.id,

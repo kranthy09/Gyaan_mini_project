@@ -57,7 +57,7 @@ class JsonPresenter(DomainPresenterInterface, HTTPResponseMixin):
             )
         user_pending_domain_posts = {
             "total_pending_posts": user_domains_details_dto.user_pending_domain_posts.total_posts,
-            "domains": user_pending_domains
+            "pending_domains": user_pending_domains
         }
         domain_requests = []
         for domain_request in user_domains_details_dto.domain_requests:
