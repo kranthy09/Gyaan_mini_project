@@ -14,8 +14,8 @@ class StorageImplementation(StorageInterface):
 
     def validate_username(self, username: str):
 
-        user_obj = User.objects.get(username=username)
-        if not user_obj:
+        is_username_does_not_exists = not User.objects.filter(username=username).exists()
+        if is_username_does_not_exists:
             raise InvalidUsername
         return True
 
