@@ -141,10 +141,10 @@ list_of_all_posts: [
 # Home Page
 
 /get/user/domains/:
-
+	
 request body: user_id
 
-validations:
+validations: 
 	validate user_id
 	no request body to do furthur validations
 
@@ -152,38 +152,163 @@ TODO: Getting user details
 TODO: Getting all doamins with user following and unfollowing
 TODO: Getting user domains approved posts and pending posts
 TODO: Getting Domain requests for domain expert and admin
+TODO: Getting Domain expert pendings which has to be approved req by user
 
 
 1) getting user details
 
 	get user details dto from user_app using services
-
+		
 		:write user details interactor in user app fetching details required
-
+		
 		:create a service to call that interface for user details
-
+		
 2) Getting all doamins with user following and unfollowing
+	
+	get user following domains
+	get user all domains
+	get user not following domains, by condition
 
+3) Getting user domains approved posts and pending posts
+	
+	from user_following_domains get user posts with post approved and pending
+	
+	DomainPostsWithStatus(
+		domain_id: int,
+		domain_name: string,
+		post_id: int,
+		is_approved: bool
+	)
+	
+	for domain_post in domain_posts_with_status:
+		domain_post_is_approved = domain_post.is_approved
+		if domain_post_is_approved:
+			
+	
+	
+	
+
+
+	
+		
+	
+
+
+On Progress:
+	
+		
+		
+
+Done:
+	1) getting user details
+		:with writing get_user_details_dto_interactor
+			--did not validate user_ids
+		
+		:create a interface in user_app to enable the communication
+		-- not writing factories after defining models
+		? what is class meta:..
+		when writing factories, for datetime field we user LazyFunction
+			with datetime.now to fill the datetime field
+	
+	2) Getting all doamins with user following and unfollowing:
+		:get user following domains
+			input: user_id
+			>kg: how to create a instance of class within its method
+
+		:get user not following domains, by condition
+	
+
+get_user_domains_interactor:
+
+TODO: get_user_details
+TODO: get_user_following_domains
+TODO: get_user_suggested_domains
+TODO: get_user_posts_with_domains
+TODO: get_user_pending_posts_with_domains
+TODO: get_domain_requests
+TODO: get_domain_expert_approval_posts_with_domains
 
 
 
 
 On Progress:
+	TODO: get_user_posts_with_domains
+		: 
+
 
 
 Done:
-
-	:with writing get_user_details_dto_interactor
-	:create a interface in user_app to enable the communication
-		-- not writing factories after defining models
-		? what is class meta:..
-		when writing factories, for datetime field we user LazyFunction
-			with datetime.now to fill the datetime field
+	TODO: get_user_details
+	TODO: get_user_following_domains
+	TODO: get_user_suggested_domains
 
 
 
 
 
+models:
+
+	Domain(models.model):
+		domain_id:
+		domain_name:
+		domain_description:
+	
+	DomainExperts(models.model):
+		domain_id : ForiegnKey(Domain)
+		domain_expert_id:
+		
+	DomainRequests(models.model):
+		domain_id:
+		requested_by:
+		is_approved:
+
+	DomainPost(models.model):
+		user_id:
+		post_id:
+		domain_id:
+		is_approved:
+
+	DomainTag(models.Model):
+		domain_id: ForiegnKey
+		tag_id:
+		
+
+	
+	
+	
+	domain contains tags
+	domain contains domain_experts
+	domain contains follow, unfollow
+		
+
+get user home page interactor :
+
+	validate offset and limit (done)
+		k_gap: how to write snapshot tests for interactors
+		
+	get user following domain ids
+	from user following domain ids get approved post ids in that particular 		domains
+	send these post ids to get posts interactor.
+		
+		from post ids get post dto
+		from post ids get post tags
+		get post comments
+		replies to that comment
+		get post reactions count and users details
+		get post answer and the answer approved user details
+		get user details who posted.
+		get total posts count
+		
+
+
+post models:
+
+	post contains tags
+	post contains comments
+	post contains reactions
+	post contains user
+	post has to be approved
+	comment contains reply
 
 
 
@@ -209,3 +334,10 @@ Done:
 
 no clean_architecture
 no database_submissions
+
+pycharm commands: 
+	ctl + B for definition root(find declarations)
+	ctl + N for searching a file or class or definition
+	ctl + E for recent files
+
+building the 

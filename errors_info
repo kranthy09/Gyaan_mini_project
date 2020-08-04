@@ -1,0 +1,12 @@
+expected two arguements but got (0) - auth api_wrapper snapshot test
+environment view not - when trying to test api using curl command, 
+			username and password is req body.
+no changes detected when running makemigrations - solution: mention model name in __init__.py
+getting python setup.py edd_info error:
+	solution: sudo apt-get install gcc python-dev libkrb5-dev
+500 Internal Server Error - didnot kept '/' when user is requesting, its from the 	frontend
+403 Forbidden - due to scopes given in api_spec and in the creation of access_token from the admin panel for create is read write after changing to write in the both places it got fixed
+DSU_EXCEPTION_FOR_STATUS_CODE - miss match in the response status code given in api_spec and the presenter may lead to this error
+permission denied while deleting a virtual env(basically a folder) - with super user command sudo rm -r <file_name> can delete that file with super user permission
+ Database access not allowed, use the "django_db" mark, or the "db" or "transactional_db" fixtures to enable it - 
+ api spec error  - error name : expected object but given type is array - solution: in writing a definition we mention with schema and here it is array and in that items we have to mention each array object type which is "type": "object.
