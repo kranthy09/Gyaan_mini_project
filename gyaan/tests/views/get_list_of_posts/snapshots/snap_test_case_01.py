@@ -57,6 +57,7 @@ snapshots['TestCase01GetListOfPostsAPITestCase.test_case body'] = {
                     ]
                 }
             ],
+            'post_comments_count': 1,
             'post_content': 'string',
             'post_id': 1,
             'post_reactions': {
@@ -77,6 +78,7 @@ snapshots['TestCase01GetListOfPostsAPITestCase.test_case body'] = {
                     'tag_name': 'string'
                 }
             ],
+            'post_title': 'string',
             'posted_by': {
                 'name': 'string',
                 'profile_pic': 'string',

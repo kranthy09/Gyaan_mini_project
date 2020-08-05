@@ -7,12 +7,12 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase01LoginUserAPITestCase::test_case status'] = 201
+snapshots['TestCase01LoginUserAPITestCase::test_case status'] = 404
 
 snapshots['TestCase01LoginUserAPITestCase::test_case body'] = {
-    'access_token': 'token',
-    'user_id': 1,
-    'user_role': 'USER'
+    'http_response_code': 404,
+    'res_status': 'INVALID_PASSWORD',
+    'response': 'Given Password is incorrect'
 }
 
 snapshots['TestCase01LoginUserAPITestCase::test_case header_params'] = {
@@ -21,7 +21,7 @@ snapshots['TestCase01LoginUserAPITestCase::test_case header_params'] = {
         'en'
     ],
     'content-length': [
-        '55',
+        '99',
         'Content-Length'
     ],
     'content-type': [
@@ -38,10 +38,4 @@ snapshots['TestCase01LoginUserAPITestCase::test_case header_params'] = {
     ]
 }
 
-snapshots['TestCase01LoginUserAPITestCase::test_case username'] = 'kranthi'
-
-snapshots['TestCase01LoginUserAPITestCase::test_case user_id'] = 1
-
-snapshots['TestCase01LoginUserAPITestCase::test_case access_token'] = 'token'
-
-snapshots['TestCase01LoginUserAPITestCase::test_case user_role'] = 'USER'
+snapshots['TestCase01LoginUserAPITestCase::test_case username'] = 'username'

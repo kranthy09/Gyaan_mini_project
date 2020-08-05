@@ -1,3 +1,6 @@
+from typing import List
+
+
 class InvalidPostId(Exception):
     pass
 
@@ -11,3 +14,7 @@ class InvalidOffset(Exception):
 
 class InvalidLimit(Exception):
     pass
+
+class InvalidPostIds(Exception):
+    def __init__(self, invalids: List[int]):
+        self.invalids = invalids

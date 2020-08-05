@@ -11,8 +11,8 @@ from user_app.models.models import User
 
 REQUEST_BODY = """
 {
-    "username": "kranthi",
-    "password": "kranthi"
+    "username": "username",
+    "password": "pass"
 }
 """
 
@@ -43,13 +43,13 @@ class TestCase01LoginUserAPITestCase(CustomAPITestCase):
     @patch('common.oauth_user_auth_tokens_service.OAuthUserAuthTokensService.create_user_auth_tokens')
     def test_case(self,create_user_auth_tokens):
         user_auth_token_dto = UserAuthTokensDTO(
-            user_id=1,
+            user_id=28,
             access_token="token",
             refresh_token="refresh_token",
             expires_in=10000
         )
         create_user_auth_tokens.return_value = user_auth_token_dto
-        user = User.objects.create(username="kranthi", password="kranthi", user_role="USER")
+        user = User.objects.create(username="username", password="pass", user_role="")
         response = self.default_test_case()
         response_content = json.loads(response.content)
         self.assert_match_snapshot(

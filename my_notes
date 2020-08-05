@@ -286,9 +286,19 @@ get user home page interactor :
 	validate offset and limit (done)
 		k_gap: how to write snapshot tests for interactors
 		
-	get user following domain ids
-	from user following domain ids get approved post ids in that particular 		domains
+	get user following domain ids(done)
+	    mistake: while calling,
+	    get_user_following_domains_interactor
+	    did not passed user_id as argument in the interactor
+
+
+	from user following domain ids get approved post ids
+	in that particular domains (done)
+	    mistake: not being concious when passing argments
+
+
 	send these post ids to get posts interactor.
+
 		
 		from post ids get post dto
 		from post ids get post tags

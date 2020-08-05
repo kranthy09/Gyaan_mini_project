@@ -5,6 +5,7 @@ from gyaan.interactors.presenters.post_presenter_interface \
 from gyaan.exceptions.exceptions \
     import (InvalidOffset,
             InvalidLimit)
+from typing import List
 
 
 class UserHomePageInteractor:
@@ -26,6 +27,15 @@ class UserHomePageInteractor:
                            offset: int, limit: int):
         self.validate_offset(offset=offset)
         self.validate_limit(limit=limit)
+        user_following_domain_ids = \
+            self.post_storage.get_user_following_domain_ids(user_id=user_id)
+        approved_post_ids = \
+            self.post_storage.get_approved_post_ids_in_user_domains(
+                domain_ids=user_following_domain_ids
+            )
+        post_details_dto = \
+            self._call_get_posts_interactor(post_ids=approved_post_ids)
+        return post_details_dto
 
     @staticmethod
     def validate_offset(offset: int):
@@ -42,3 +52,12 @@ class UserHomePageInteractor:
             raise InvalidLimit
         else:
             return True
+
+    def _call_get_posts_interactor(self, post_ids: List[int]):
+        from gyaan.interactors.get_posts_interactor import GetPost
+
+        post_interactor = GetPost(
+            post_storage=self.post_storage
+        )
+        post_details_dtos = post_interactor.get_posts(post_ids=post_ids)
+        return post_details_dtos
