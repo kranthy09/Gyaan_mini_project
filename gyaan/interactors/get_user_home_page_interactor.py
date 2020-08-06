@@ -16,12 +16,14 @@ class UserHomePageInteractor:
     def get_user_home_page_wrapper(self, offset: int, limit: int, user_id: int,
                                    post_presenter: PostPresenterInterface):
         try:
-            self.get_user_home_page(user_id=user_id,
+            post_details_dto_with_count \
+                = self.get_user_home_page(user_id=user_id,
                                     offset=offset, limit=limit)
         except InvalidOffset:
-            post_presenter.get_response_for_invalid_offset()
+            return post_presenter.get_response_for_invalid_offset()
         except InvalidLimit:
-            post_presenter.get_response_for_invalid_limit()
+            return post_presenter.get_response_for_invalid_limit()
+        return post_details_dto_with_count
 
     def get_user_home_page(self, user_id: int,
                            offset: int, limit: int):
@@ -33,9 +35,9 @@ class UserHomePageInteractor:
             self.post_storage.get_approved_post_ids_in_user_domains(
                 domain_ids=user_following_domain_ids
             )
-        post_details_dto = \
+        post_details_dto_with_count = \
             self._call_get_posts_interactor(post_ids=approved_post_ids)
-        return post_details_dto
+        return post_details_dto_with_count
 
     @staticmethod
     def validate_offset(offset: int):
@@ -59,5 +61,5 @@ class UserHomePageInteractor:
         post_interactor = GetPost(
             post_storage=self.post_storage
         )
-        post_details_dtos = post_interactor.get_posts(post_ids=post_ids)
-        return post_details_dtos
+        post_details_dtos_with_count = post_interactor.get_posts(post_ids=post_ids)
+        return post_details_dtos_with_count

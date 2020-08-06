@@ -21,5 +21,4 @@ def api_wrapper(*args, **kwargs):
 
     response = interactor.get_user_domains_wrapper(user_id=user_id,
                                                    domain_presenter=domain_presenter)
-    print(response)
     return response

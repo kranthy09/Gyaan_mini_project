@@ -17,3 +17,8 @@ class PostPresenterInterface(ABC):
             self,
             post_ids: List[int]):
         pass
+
+    @abstractmethod
+    def get_response_for_home_page(
+            self, post_details_dto_with_count):
+        pass
