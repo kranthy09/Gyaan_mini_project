@@ -35,8 +35,12 @@ class UserHomePageInteractor:
             self.post_storage.get_approved_post_ids_in_user_domains(
                 domain_ids=user_following_domain_ids
             )
+        if offset+limit > len(approved_post_ids):
+            post_ids = approved_post_ids[offset: offset+limit]
+        else:
+            post_ids = approved_post_ids[offset:]
         post_details_dto_with_count = \
-            self._call_get_posts_interactor(post_ids=approved_post_ids)
+            self._call_get_posts_interactor(post_ids=post_ids)
         return post_details_dto_with_count
 
     @staticmethod

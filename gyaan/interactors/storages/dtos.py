@@ -32,3 +32,11 @@ class UserDomainsDetails:
     user_pending_domain_posts: DomainMetrics
     domain_requests: List[UserDetailsDto]
     domain_expert_pendings: List[DomainDto]
+
+
+@dataclass
+class PostDto:
+    post_id: int
+    post_title: str
+    post_content: str
+    posted_at: str

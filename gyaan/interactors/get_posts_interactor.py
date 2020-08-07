@@ -2,7 +2,7 @@ from gyaan.interactors.storages.post_storage_interface \
     import PostStorageInterface
 from gyaan.interactors.presenters.post_presenter_interface \
     import PostPresenterInterface
-from gyaan.exceptions.exceptions import InvalidPostIds
+from gyaan.exceptions.exceptions import InvalidPostId
 from typing import List
 
 
@@ -14,9 +14,9 @@ class GetPost:
                           post_presenter: PostPresenterInterface):
         try:
             self.get_posts(post_ids=post_ids)
-        except InvalidPostIds:
+        except InvalidPostId:
             post_presenter.get_response_for_invalid_post_ids(post_ids)
 
     def get_posts(self, post_ids: List[int]):
 
-        pass
+        self.post_storage.validate_post_ids(post_ids=post_ids)

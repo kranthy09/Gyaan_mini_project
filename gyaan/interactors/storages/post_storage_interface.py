@@ -13,3 +13,7 @@ class PostStorageInterface(ABC):
             self, domain_ids: List[int]) \
             -> List[int]:
         pass
+
+    @abstractmethod
+    def validate_post_ids(self, post_ids: List[int]):
+        pass
