@@ -300,10 +300,18 @@ get user home page interactor :
 	send these post ids to get posts interactor.
 
 		
-		from post ids get post dto
-		from post ids get post tags
+		from post ids get post dto(done)
+
+		from post ids get tag ids(done)
+
+        from tag ids get tag dtos(done)
+
 		get post comments
+		    get all comment ids for each post
+		    from comment ids get comment_dtos
 		replies to that comment
+		    from comment ids get comment reply dtos
+		    from reply ids get reply dtos
 		get post reactions count and users details
 		get post answer and the answer approved user details
 		get user details who posted.

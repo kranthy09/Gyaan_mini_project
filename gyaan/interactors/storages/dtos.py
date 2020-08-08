@@ -40,3 +40,44 @@ class PostDto:
     post_title: str
     post_content: str
     posted_at: str
+    post_comments_count: int
+
+
+@dataclass
+class PostTag:
+    post_id: int
+    tag_id: int
+
+
+@dataclass
+class TagDto:
+    tag_id: int
+    tag_name: str
+
+
+@dataclass
+class PostComment:
+    post_id: int
+    comment_id: int
+
+
+@dataclass
+class CommentDto:
+    comment_id: int
+    comment_content: str
+    commented_at: str
+    commented_by: UserDetailsDto
+
+
+@dataclass
+class ReplyDto:
+    reply_id: int
+    replied_by: UserDetailsDto
+    reply_content: str
+    replied_at: str
+
+
+@dataclass
+class CommentReplyDto:
+    comment_id: int
+    reply_id: int
