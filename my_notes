@@ -306,13 +306,15 @@ get user home page interactor :
 
         from tag ids get tag dtos(done)
 
-		get post comments
+		get post comments(done)
 		    get all comment ids for each post
 		    from comment ids get comment_dtos
-		replies to that comment
+
+		replies to that comment(done)
 		    from comment ids get comment reply dtos
 		    from reply ids get reply dtos
-		get post reactions count and users details
+
+		get post reactions count and users details(done)
 		get post answer and the answer approved user details
 		get user details who posted.
 		get total posts count

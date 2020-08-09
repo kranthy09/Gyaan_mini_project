@@ -7,7 +7,9 @@ from gyaan.interactors.storages.dtos \
             PostComment,
             CommentDto,
             CommentReplyDto,
-            ReplyDto)
+            ReplyDto,
+            PostReactionDto,
+            ReactionDto)
 
 
 class PostStorageInterface(ABC):
@@ -44,7 +46,7 @@ class PostStorageInterface(ABC):
 
     @abstractmethod
     def get_post_comment_ids_sort_by_date(
-            self, post_ids:List[int]) \
+            self, post_ids: List[int]) \
             -> List[PostComment]:
         pass
 
@@ -61,4 +63,14 @@ class PostStorageInterface(ABC):
     @abstractmethod
     def get_reply_dtos(self, reply_ids: List[int]) \
             -> List[ReplyDto]:
+        pass
+
+    @abstractmethod
+    def get_post_reactions_ids_dtos(self, post_ids: List[int]) \
+            -> List[PostReactionDto]:
+        pass
+
+    @abstractmethod
+    def get_reaction_dtos(self, reaction_ids: List[int]) \
+            -> List[ReactionDto]:
         pass

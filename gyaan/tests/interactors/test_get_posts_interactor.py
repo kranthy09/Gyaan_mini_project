@@ -11,7 +11,9 @@ from gyaan.interactors.storages.dtos \
             PostComment,
             CommentDto,
             CommentReplyDto,
-            ReplyDto)
+            ReplyDto,
+            PostReactionDto,
+            ReactionDto)
 from gyaan.adapters.dtos \
     import UserDetailsDto
 from user_app.constants.enums \
@@ -144,13 +146,13 @@ class TestGetPostInteractor:
                 comment_id=1,
                 comment_content='comment_1',
                 commented_at="25-08-2020",
-                commented_by=user2
+                commented_by_id=3
             ),
             CommentDto(
                 comment_id=2,
                 comment_content='comment_2',
                 commented_at="27-08-2020",
-                commented_by=user2
+                commented_by_id=5
             )
         ]
         comment_reply_ids_dto = [
@@ -168,10 +170,62 @@ class TestGetPostInteractor:
         reply_dtos = [
             ReplyDto(
                 reply_id=1,
-                replied_by=user2,
+                replied_by_id=2,
+                reply_content="reply_content",
+                replied_at="29-07-2020"
+            ),
+            ReplyDto(
+                reply_id=2,
+                replied_by_id=2,
+                reply_content="reply_content",
+                replied_at="30-07-2020"
+            )
+
+        ]
+        post_reactions_ids_dtos = [
+            PostReactionDto(
+                post_id=1,
+                reaction_id=1
+            ),
+            PostReactionDto(
+                post_id=1,
+                reaction_id=2
+            ),
+            PostReactionDto(
+                post_id=2,
+                reaction_id=3
+            ),
+            PostReactionDto(
+                post_id=2,
+                reaction_id=4
             )
         ]
-
+        reaction_ids = [
+            post_reaction.reaction_id
+            for post_reaction in post_reactions_ids_dtos
+        ]
+        reaction_dtos = [
+            ReactionDto(
+                reaction_id=1,
+                reacted_by_id=4,
+                reacted_at="01-08-2020"
+            ),
+            ReactionDto(
+                reaction_id=2,
+                reacted_by_id=5,
+                reacted_at="01-08-2020"
+            ),
+            ReactionDto(
+                reaction_id=3,
+                reacted_by_id=6,
+                reacted_at="01-08-2020"
+            ),
+            ReactionDto(
+                reaction_id=1,
+                reacted_by_id=7,
+                reacted_at="01-08-2020"
+            )
+        ]
 
         interactor = GetPost(
             post_storage=post_storage
@@ -193,6 +247,10 @@ class TestGetPostInteractor:
             .return_value = comment_reply_ids_dto
         post_storage.get_reply_dtos \
             .return_value = reply_dtos
+        post_storage.get_post_reactions_ids_dtos \
+            .return_value = post_reactions_ids_dtos
+        post_storage.get_reaction_dtos \
+            .return_value = reaction_dtos
 
 
         # Act
@@ -215,3 +273,9 @@ class TestGetPostInteractor:
             .assert_called_once_with(post_ids=post_ids)
         post_storage.get_comment_dtos \
             .assert_called_once_with(comment_ids=comment_ids)
+        post_storage.get_reply_dtos \
+            .assert_called_once_with(reply_ids=reply_ids)
+        post_storage.get_post_reactions_ids_dtos \
+            .assert_called_once_with(post_ids=post_ids)
+        post_storage.get_reaction_dtos \
+            .assert_called_once_with(reaction_ids=reaction_ids)

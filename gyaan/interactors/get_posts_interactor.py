@@ -5,7 +5,11 @@ from gyaan.interactors.presenters.post_presenter_interface \
 from gyaan.exceptions.exceptions import InvalidPostId
 from typing import List
 from gyaan.interactors.storages.dtos \
-    import CommentDto
+    import (CommentDto,
+            PostReactionDto,
+            ReactionDto,
+            PostReactionWithCountUser)
+
 
 
 class GetPost:
@@ -40,6 +44,18 @@ class GetPost:
                      for comment_reply in comment_reply_ids_dto]
         reply_dtos = self.post_storage \
             .get_reply_dtos(reply_ids=reply_ids)
+        post_reaction_ids_dtos = self.post_storage \
+            .get_post_reactions_ids_dtos(post_ids=post_ids)
+        reaction_ids = [post_reaction.reaction_id
+                        for post_reaction in post_reaction_ids_dtos]
+        reaction_dtos = self.post_storage \
+            .get_reaction_dtos(reaction_ids=reaction_ids)
+        post_reactions_with_count_user_details = \
+            self._call_for_post_reactions_count_user_details(
+                post_reaction_ids_dtos=post_reaction_ids_dtos,
+                reaction_dtos=reaction_dtos
+            )
+
 
     def get_latest_comments(self, comment_ids: List[int]) \
             -> List[CommentDto]:
@@ -50,3 +66,10 @@ class GetPost:
         comment_dtos = self.post_storage \
             .get_comment_dtos(comment_ids=comment_ids)
         return comment_dtos
+
+    def _call_for_post_reactions_count_user_details(
+            self,
+            reaction_dtos: List[ReactionDto],
+            post_reaction_ids_dtos: List[PostReactionDto]) \
+            -> PostReactionWithCountUser:
+        pass

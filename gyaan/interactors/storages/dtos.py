@@ -66,13 +66,13 @@ class CommentDto:
     comment_id: int
     comment_content: str
     commented_at: str
-    commented_by: UserDetailsDto
+    commented_by_id: int
 
 
 @dataclass
 class ReplyDto:
     reply_id: int
-    replied_by: UserDetailsDto
+    replied_by_id: int
     reply_content: str
     replied_at: str
 
@@ -81,3 +81,22 @@ class ReplyDto:
 class CommentReplyDto:
     comment_id: int
     reply_id: int
+
+
+@dataclass
+class PostReactionDto:
+    post_id: int
+    reaction_id: int
+
+
+@dataclass
+class ReactionDto:
+    reaction_id: int
+    reacted_by_id: int
+    reacted_at: str
+
+
+@dataclass
+class PostReactionWithCountUser:
+    reactions_count: int
+    reacted_by: List[UserDetailsDto]
