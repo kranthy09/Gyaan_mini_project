@@ -4,6 +4,8 @@ from gyaan.interactors.presenters.post_presenter_interface \
     import PostPresenterInterface
 from gyaan.exceptions.exceptions import InvalidPostId
 from typing import List
+from gyaan.adapters.dtos \
+    import UserDetailsDto
 from gyaan.interactors.storages.dtos \
     import (CommentDto,
             PostReactionDto,
@@ -71,5 +73,38 @@ class GetPost:
             self,
             reaction_dtos: List[ReactionDto],
             post_reaction_ids_dtos: List[PostReactionDto]) \
-            -> PostReactionWithCountUser:
-        pass
+            -> List[PostReactionWithCountUser]:
+
+        post_reactions_with_count_user_details = []
+        for post_reaction in post_reaction_ids_dtos:
+            reacted_by_list = []
+            for reaction_dto in reaction_dtos:
+                if post_reaction.reaction_id == reaction_dto.reaction_id:
+                    user_details_dto = self._call_for_reacted_by(
+                        reacted_by_id=reaction_dto.reacted_by_id
+                    )
+                    reacted_by_list.append(
+                        user_details_dto
+                    )
+            post_reactions_with_count_user_details.append(
+                PostReactionWithCountUser(
+                    reactions_count=len(reacted_by_list),
+                    reacted_by=reacted_by_list
+                )
+            )
+        return post_reactions_with_count_user_details
+
+    @staticmethod
+    def _call_for_reacted_by(reacted_by_id: int) \
+        -> UserDetailsDto:
+
+        user_ids = [reacted_by_id]
+        from gyaan.adapters.userapp_adapter \
+            import UserAppAdapter
+
+        user_adapter = UserAppAdapter()
+        user_details_dtos = \
+            user_adapter.get_user_details_dto(
+                user_ids=user_ids
+            )
+        return user_details_dtos[0]
