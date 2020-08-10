@@ -9,7 +9,8 @@ from gyaan.interactors.storages.dtos \
             CommentReplyDto,
             ReplyDto,
             PostReactionDto,
-            ReactionDto)
+            ReactionDto,
+            PostAnswerDto)
 
 
 class PostStorageInterface(ABC):
@@ -73,4 +74,9 @@ class PostStorageInterface(ABC):
     @abstractmethod
     def get_reaction_dtos(self, reaction_ids: List[int]) \
             -> List[ReactionDto]:
+        pass
+
+    @abstractmethod
+    def get_post_answer_ids_dtos(self, post_ids: List[int]) \
+            -> List[PostAnswerDto]:
         pass

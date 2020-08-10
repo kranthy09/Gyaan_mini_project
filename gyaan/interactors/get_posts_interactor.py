@@ -13,7 +13,6 @@ from gyaan.interactors.storages.dtos \
             PostReactionWithCountUser)
 
 
-
 class GetPost:
     def __init__(self, post_storage: PostStorageInterface):
         self.post_storage = post_storage
@@ -57,7 +56,10 @@ class GetPost:
                 post_reaction_ids_dtos=post_reaction_ids_dtos,
                 reaction_dtos=reaction_dtos
             )
-
+        post_answer_ids_dtos = self.post_storage \
+            .get_post_answer_ids_dtos(
+            post_ids=post_ids
+        )
 
     def get_latest_comments(self, comment_ids: List[int]) \
             -> List[CommentDto]:
@@ -96,15 +98,16 @@ class GetPost:
 
     @staticmethod
     def _call_for_reacted_by(reacted_by_id: int) \
-        -> UserDetailsDto:
+            -> UserDetailsDto:
 
-        user_ids = [reacted_by_id]
-        from gyaan.adapters.userapp_adapter \
-            import UserAppAdapter
-
-        user_adapter = UserAppAdapter()
-        user_details_dtos = \
-            user_adapter.get_user_details_dto(
-                user_ids=user_ids
-            )
-        return user_details_dtos[0]
+        # user_ids = [reacted_by_id]
+        # from gyaan.adapters.userapp_adapter \
+        #     import UserAppAdapter
+        #
+        # user_adapter = UserAppAdapter()
+        # user_details_dtos = \
+        #     user_adapter.get_user_details_dto(
+        #         user_ids=user_ids
+        #     )
+        # return user_details_dtos[0]
+        pass

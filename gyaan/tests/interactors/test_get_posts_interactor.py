@@ -13,7 +13,8 @@ from gyaan.interactors.storages.dtos \
             CommentReplyDto,
             ReplyDto,
             PostReactionDto,
-            ReactionDto)
+            ReactionDto,
+            PostAnswerDto)
 from gyaan.adapters.dtos \
     import UserDetailsDto
 from user_app.constants.enums \
@@ -226,6 +227,16 @@ class TestGetPostInteractor:
                 reacted_at="01-08-2020"
             )
         ]
+        post_answer_ids_dtos = [
+            PostAnswerDto(
+                post_id=1,
+                answer_id=1
+            ),
+            PostAnswerDto(
+                post_id=2,
+                answer_id=2
+            )
+        ]
 
         interactor = GetPost(
             post_storage=post_storage
@@ -251,6 +262,9 @@ class TestGetPostInteractor:
             .return_value = post_reactions_ids_dtos
         post_storage.get_reaction_dtos \
             .return_value = reaction_dtos
+        post_storage.get_post_answer_ids_dtos \
+            .return_value = post_answer_ids_dtos
+
 
 
         # Act
@@ -279,3 +293,5 @@ class TestGetPostInteractor:
             .assert_called_once_with(post_ids=post_ids)
         post_storage.get_reaction_dtos \
             .assert_called_once_with(reaction_ids=reaction_ids)
+        post_storage.get_post_answer_ids_dtos \
+            .assert_called_once_with(post_ids=post_ids)

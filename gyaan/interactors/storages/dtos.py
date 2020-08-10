@@ -100,3 +100,9 @@ class ReactionDto:
 class PostReactionWithCountUser:
     reactions_count: int
     reacted_by: List[UserDetailsDto]
+
+
+@dataclass
+class PostAnswerDto:
+    post_id: int
+    answer_id: int
