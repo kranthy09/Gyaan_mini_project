@@ -60,6 +60,13 @@ class GetPost:
             .get_post_answer_ids_dtos(
             post_ids=post_ids
         )
+        answer_ids = [post_answer_dto.answer_id
+                      for post_answer_dto in post_answer_ids_dtos]
+        answer_dtos = self.post_storage \
+            .get_answer_dtos(answer_ids=answer_ids)
+
+
+
 
     def get_latest_comments(self, comment_ids: List[int]) \
             -> List[CommentDto]:

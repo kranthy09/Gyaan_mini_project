@@ -106,3 +106,12 @@ class PostReactionWithCountUser:
 class PostAnswerDto:
     post_id: int
     answer_id: int
+
+
+@dataclass
+class AnswerDto:
+    answer_id: int
+    answer_content: str
+    answered_at: str
+    answered_by_id: int
+    approved_by_id: int
