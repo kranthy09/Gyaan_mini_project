@@ -64,6 +64,8 @@ class GetPost:
                       for post_answer_dto in post_answer_ids_dtos]
         answer_dtos = self.post_storage \
             .get_answer_dtos(answer_ids=answer_ids)
+        post_user_id_dtos = self.post_storage \
+            .get_post_user_ids_dto(post_ids=post_ids)
 
 
 

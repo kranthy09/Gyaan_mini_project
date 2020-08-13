@@ -327,7 +327,13 @@ get user home page interactor :
 
 
 		get user details who posted.
-		get total posts count
+		    we have post_ids, from each post_id get post_user_ids dtos
+		    PostUserDto:
+		        post_id: int
+		        user_id: int
+
+
+		get total posts count(done)
 		
 
 

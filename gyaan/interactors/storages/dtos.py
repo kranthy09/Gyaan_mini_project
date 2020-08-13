@@ -115,3 +115,9 @@ class AnswerDto:
     answered_at: str
     answered_by_id: int
     approved_by_id: int
+
+
+@dataclass
+class PostUserDto:
+    post_id: int
+    user_id: int
